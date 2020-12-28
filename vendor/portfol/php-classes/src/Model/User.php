@@ -46,5 +46,67 @@ class User extends Model{
     public static function logout(){
         $_SESSION[User::SESSION] = NULL;
     }
+
+    public static function listAll(){
+        $sql = new SQL();
+        return $sql->select("SELECT * FROM usuario");
+    }
+
+    public function save(){
+        $sql = new Sql();
+        $results = $sql->select("CALL st_usuario_save (
+                        :LOGIN_USUARIO, 
+                        :PASS_USUARIO, 
+                        :ISADMIN_USUARIO, 
+                        :EMAIL_USUARIO, 
+                        :TELEFONE_USUARIO, 
+                        :NOME_USUARIO)", array(
+                            ":LOGIN_USUARIO"    =>  $this->getLOGIN_USUARIO(),
+                            ":PASS_USUARIO"     =>  $this->getPASS_USUARIO(),
+                            ":ISADMIN_USUARIO"  =>  $this->getISADMIN_USUARIO(),
+                            ":EMAIL_USUARIO"    =>  $this->getEMAIL_USUARIO(),
+                            ":TELEFONE_USUARIO" =>  $this->getTELEFONE_USUARIO(),
+                            ":NOME_USUARIO"     =>  $this->getNOME_USUARIO()
+                        ));
+        $this->setData($results[0]);
+    }
+
+    public function get($idUsuario){
+        $sql = new Sql();
+        $results = $sql->select("SELECT * FROM usuario WHERE ID_USUARIO = :idUsuario", array(
+            ":idUsuario"    =>  $idUsuario
+        ));
+
+        $this->setData($results[0]);
+    }
+
+    public function update(){
+        $sql = new Sql();
+        $results = $sql->select("CALL st_usuarioupdate_save (
+                        :ID_USUARIO,
+                        :LOGIN_USUARIO, 
+                        :PASS_USUARIO, 
+                        :ISADMIN_USUARIO, 
+                        :EMAIL_USUARIO, 
+                        :TELEFONE_USUARIO, 
+                        :NOME_USUARIO)", array(
+                            ":ID_USUARIO"       => $this->getID_USUARIO(),
+                            ":LOGIN_USUARIO"    =>  $this->getLOGIN_USUARIO(),
+                            ":PASS_USUARIO"     =>  $this->getPASS_USUARIO(),
+                            ":ISADMIN_USUARIO"  =>  $this->getISADMIN_USUARIO(),
+                            ":EMAIL_USUARIO"    =>  $this->getEMAIL_USUARIO(),
+                            ":TELEFONE_USUARIO" =>  $this->getTELEFONE_USUARIO(),
+                            ":NOME_USUARIO"     =>  $this->getNOME_USUARIO()
+                        ));
+        $this->setData($results[0]);
+    }
+
+    public function delete(){
+        $sql = new Sql();
+        
+        $sql->query("CALL st_users_delete(:ID_USUARIO)", array(
+            ":ID_USUARIO"=>$this->getID_USUARIO()
+        ));
+    }
 }
 ?>
