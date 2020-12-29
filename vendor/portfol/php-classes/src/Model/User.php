@@ -1,11 +1,15 @@
 <?php
 namespace Portfol\Model;
+
 use Portfol\DB\Sql;
 use Portfol\Model;
+use Portfol\Mailer;
 
 
 class User extends Model{
     const SESSION = "User";
+    const SECRET = "HcodePhp7_Secret";
+	const SECRET_IV = "HcodePhp7_Secret_IV";
 
     public static function login($login, $password){
         $sql = new Sql();
@@ -107,6 +111,82 @@ class User extends Model{
         $sql->query("CALL st_users_delete(:ID_USUARIO)", array(
             ":ID_USUARIO"=>$this->getID_USUARIO()
         ));
+    }
+
+    public static function getForgot($email){
+        $sql = new Sql();
+        $results = $sql->select("SELECT * 
+        FROM usuario
+        WHERE EMAIL_USUARIO = :email;", array(
+            ":email"=>$email
+        ));
+
+        if (count($results) === 0){
+            throw new \Exception("Não foi possível recuperar a senha");
+        } else{
+            $data = $results[0];
+            $remote = $data["REMOTE_ADDR"] ?? '127.0.0.1';
+            $results2 = $sql->select("CALL st_userspasswordrecoveries_create(:ID_USUARIO, :IP_USUARIO)", array(
+                ":ID_USUARIO"=> (int)$data["ID_USUARIO"],
+                ":IP_USUARIO"=> $remote
+            ));
+
+            if (count($results2) === 0) {
+                throw new \Exception("Não foi possível recuperar a senha");
+            }else {
+                $dataRecovery = $results2[0];
+                $code = openssl_encrypt($dataRecovery['ID_RECOVERY'], 'AES-128-CBC', pack("a16", User::SECRET), 0, pack("a16", User::SECRET_IV));                
+                $code = base64_encode($code);
+                $link = "http://www.portfol.com.br/admin/forgot/reset?code=$code";
+                $mailer = new Mailer($data["EMAIL_USUARIO"], $data["NOME_USUARIO"], "Redefinição de Senha do Portfol", "forgot", array(
+                    "name"=>$data["NOME_USUARIO"],
+                    "link"=>$link
+                ));
+
+                $mailer->send();
+                return $data;
+            }
+        }
+    }
+
+    public static function validForgotDecrypt($code){
+        $code = base64_decode($code);
+        $idrecovery = openssl_decrypt($code, 'AES-128-CBC', pack("a16", User::SECRET), 0, pack("a16", User::SECRET_IV));
+        $sql = new Sql();
+        $results = $sql->select("
+        SELECT * FROM log_userpasswordrecoveries a
+        INNER JOIN usuario b USING(ID_USUARIO)
+        WHERE a.ID_RECOVERY = :ID_RECOVERY
+        AND 
+        a.DTRECOVERY IS NULL
+        AND
+        DATE_ADD(DTREGISTER, INTERVAL 1 HOUR) >= NOW();
+        ", array(
+            ":ID_RECOVERY" => $idrecovery
+        ));
+
+        if (count($results) === 0) {
+            throw new \Exception("Não foi possível recuperar a senha");
+            
+        } else {
+            return $results[0];
+        }
+    }
+
+    public static function setForgotUsed($idrecovery){
+        $sql = new Sql();
+
+        $sql->query("UPDATE log_userpasswordrecoveries SET DTRECOVERY = NOW() WHERE ID_RECOVERY = :ID_RECOVERY", array(
+            ":ID_RECOVERY" => $idrecovery
+        ));
+    }
+
+    public function setPassword($password){
+        $sql = new Sql();
+        $sql->query("UPDATE usuario SET PASS_USUARIO = :PASS_USUARIO WHERE ID_USUARIO = :ID_USUARIO", array(
+            ":PASS_USUARIO" => $password,
+            ":ID_USUARIO" => $this->getID_USUARIO()
+        ));    
     }
 }
 ?>

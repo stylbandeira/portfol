@@ -10,6 +10,7 @@ class ComposerStaticInitc50a0bc672cd596c3f9ada278f30e459
         'P' => 
         array (
             'Portfol\\' => 8,
+            'PHPMailer\\PHPMailer\\' => 20,
         ),
     );
 
@@ -17,6 +18,10 @@ class ComposerStaticInitc50a0bc672cd596c3f9ada278f30e459
         'Portfol\\' => 
         array (
             0 => __DIR__ . '/..' . '/portfol/php-classes/src',
+        ),
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
     );
 
@@ -39,14 +44,6 @@ class ComposerStaticInitc50a0bc672cd596c3f9ada278f30e459
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'EasyPeasyICS' => __DIR__ . '/..' . '/phpmailer/phpmailer/extras/EasyPeasyICS.php',
-        'PHPMailer' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.phpmailer.php',
-        'PHPMailerOAuth' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.phpmaileroauth.php',
-        'PHPMailerOAuthGoogle' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.phpmaileroauthgoogle.php',
-        'POP3' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.pop3.php',
-        'SMTP' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.smtp.php',
-        'ntlm_sasl_client_class' => __DIR__ . '/..' . '/phpmailer/phpmailer/extras/ntlm_sasl_client.php',
-        'phpmailerException' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.phpmailer.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
