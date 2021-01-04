@@ -1,0 +1,42 @@
+html, body{
+    height: 100%;
+    margin: 0%;
+    margin-top: 100px;
+}
+
+main{
+    min-height: 100%;
+    min-width: 100%;
+}
+.st-categoria h2{
+    align-content: center;
+    text-align: center;
+}
+.st-footer{
+    background-color:#212529;
+    padding: 20px;
+    margin-top: 10px;
+    min-height: 50%;
+}
+.st-footer h3, i, p{
+    color: floralwhite;
+}
+
+.st-footer h6{
+    color: floralwhite;
+    font-size: 10px;
+}
+
+.st-footer a:hover{
+    color: floralwhite;
+    text-decoration: none;
+}
+
+.st-footer a{
+    color: lightskyblue;
+    text-decoration: none;
+}
+
+#contact-area{
+    margin: 10px;
+}

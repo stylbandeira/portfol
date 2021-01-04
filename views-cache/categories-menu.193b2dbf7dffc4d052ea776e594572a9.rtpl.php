@@ -1,0 +1,1 @@
+<?php if(!class_exists('Rain\Tpl')){exit;}?><li><a href="/categories/3">Bebidas</a></li><li><a href="/categories/4">Bebidas Alcoólicas</a></li><li><a href="/categories/6">Cigarros</a></li><li><a href="/categories/5">Comida</a></li>

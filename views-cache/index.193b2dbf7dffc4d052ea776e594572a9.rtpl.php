@@ -1,4 +1,6 @@
-<?php if(!class_exists('Rain\Tpl')){exit;}?><main class="container">
+<?php if(!class_exists('Rain\Tpl')){exit;}?><br>
+<br>
+<main class="container">
     <div class="bg-light p-5 rounded">
       <h1>Navbar example</h1>
       <p class="lead">This example is a quick exercise to illustrate how fixed to top navbar works. As you scroll, it will remain fixed to the top of your browser’s viewport.</p>

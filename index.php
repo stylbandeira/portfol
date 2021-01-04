@@ -17,6 +17,11 @@ $app->get('/', function() {
     $page->setTpl("index");
 });
 
+$app->get('/album', function() {
+    $page = new Page();
+    $page->setTpl("album");
+});
+
 $app->get('/admin', function() {
     User::verifyLogin();
     $page = new PageAdmin();
@@ -205,6 +210,16 @@ $app->post("/admin/categories/:ID_CATEGORIA", function($idcategory){
 
     header("Location: /admin/categories");
     exit;
+});
+
+$app->get("/categories/:ID_CATEGORIA", function($ID_CATEGORIA){
+    $category = new Category();
+    $category->get((int)$ID_CATEGORIA);
+    $page = new Page();
+    $page->setTpl("category", array(
+        'category'=>$category->getValues(),
+        'products'=>[]
+    ));
 });
 
 $app->run();
