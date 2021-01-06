@@ -83,7 +83,10 @@ class Product extends Model{
                 break;
             default:
             
-            header("Location: /admin/products");
+            echo ("<SCRIPT LANGUAGE='JavaScript'>
+                    window.alert('Ocorreu um erro ao enviar este formato de imagem. A alteração não foi salva.')
+                    window.location.href='/admin/products';
+                    </SCRIPT>");
             exit;
         }
         $dist = $_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR . 
