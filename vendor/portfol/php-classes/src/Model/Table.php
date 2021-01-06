@@ -16,10 +16,10 @@ class Table extends Model{
         $sql = new Sql();
         $results = $sql->select("CALL st_tables_save (
                         :ID_MESA, 
-                        :ID_PEDIDO,
+                        :ID_PEDIDO
                         )", array(
                             ":ID_MESA"    =>  $this->getID_MESA(),
-                            ":ID_PEDIDO"     =>  $this->getID_PEDIDO()
+                            ":ID_PEDIDO"     =>  NULL
                         ));
         $this->setData($results[0]);
     }
@@ -35,7 +35,7 @@ class Table extends Model{
     public function delete(){
         $sql = new Sql();
         $sql->query("DELETE FROM mesa WHERE ID_MESA = :ID_MESA", array(
-            ":ID_MESA" => $this->getID_ITEM()
+            ":ID_MESA" => $this->getID_MESA()
         ));
     }
 }
