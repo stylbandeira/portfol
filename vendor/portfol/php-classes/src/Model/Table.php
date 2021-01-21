@@ -12,6 +12,11 @@ class Table extends Model{
         return $sql->select("SELECT * FROM mesa");
     }
 
+    public static function listEmpty(){
+        $sql = new Sql();
+        return $sql->select("SELECT * FROM mesa WHERE ID_PEDIDO IS NULL;");
+    }
+
     public function save(){
         $sql = new Sql();
         $results = $sql->select("CALL st_tables_save (
@@ -22,6 +27,18 @@ class Table extends Model{
                             ":ID_PEDIDO"     =>  NULL
                         ));
         $this->setData($results[0]);
+    }
+
+    public function open(){
+        $sql = new Sql();
+        $results = $sql->select("CALL st_tables_save (
+            :ID_MESA, 
+            :ID_PEDIDO
+            )", array(
+                ":ID_MESA"    =>  $this->getID_MESA(),
+                ":ID_PEDIDO"     =>  $this
+            ));
+$this->setData($results[0]);
     }
 
     public function get($idtable){

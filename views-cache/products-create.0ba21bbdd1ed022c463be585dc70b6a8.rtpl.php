@@ -36,7 +36,7 @@
 
             <div class="form-group">
               <label for="SRC_IMG">URL</label>
-              <input type="url" class="form-control" id="SRC_IMG" name="SRC_IMG">
+              <input type="text" class="form-control" id="SRC_IMG" name="SRC_IMG">
             </div>
           </div>
           <!-- /.box-body -->
