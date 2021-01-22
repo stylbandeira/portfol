@@ -44,7 +44,7 @@
                     <td style = <?php if( $value1["STATUS_PEDIDO"] == 'ABERTO' ){ ?>"color: green"<?php }else{ ?>"color: red"<?php } ?>><b><?php echo htmlspecialchars( $value1["STATUS_PEDIDO"], ENT_COMPAT, 'UTF-8', FALSE ); ?></b></td>
                     <td><a href="/admin/orders/<?php echo htmlspecialchars( $value1["ID_PEDIDO"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"<?php if( $value1["ID_PEDIDO"] == NULL ){ ?>disabled<?php }else{ ?>Não<?php } ?>><i class="fa fa-cart"></i>Abrir Pedido</a></td>
                     <td>
-                      <a href="/admin/orders/<?php echo htmlspecialchars( $value1["ID_PEDIDO"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Finalizar</a>
+                      <a <?php if( $value1["VAL_TOTAL"] == 0 ){ ?> href="/admin/orders/<?php echo htmlspecialchars( $value1["ID_PEDIDO"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir este registro?')" <?php }else{ ?>onclick="return confirm('O pedido não foi pago ainda')"<?php } ?> class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Finalizar</a>
                     </td>
                   </tr>
                   <?php } ?>

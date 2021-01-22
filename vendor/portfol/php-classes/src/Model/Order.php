@@ -43,24 +43,28 @@ class Order extends Model{
                             ":ID_PEDIDO"    =>  $this->getID_PEDIDO(),
                             ":ID_CLIENTE"     =>  $this->getID_CLIENTE(),
                             ":TIPO_PEDIDO" => $this->getTIPO_PEDIDO(),
-                            ":STATUS_PEDIDO" => $this->getSTATUS_PEDIDO()
+                            ":STATUS_PEDIDO" => "ABERTO"
                         ));
         $this->setData($results[0]);
     }
 
     public function get($idpedido){
         $sql = new Sql();
-        $results = $sql->select("SELECT * FROM pedido WHERE ID_MESA = :ID_MESA", array(
-            ":ID_MESA" => $idtable 
+        $results = $sql->select("SELECT * FROM pedido WHERE ID_PEDIDO = :ID_PEDIDO", array(
+            ":ID_PEDIDO" => $idpedido 
         ));        
         $this->setData($results[0]);
     }
 
     public function delete(){
+        if ($this->getVAL_TOTAL() > 0) {
+            throw new \Exception("Você não pode apagar uma conta que ainda não foi paga!", 1);
+        } else {
         $sql = new Sql();
-        $sql->query("DELETE FROM mesa WHERE ID_MESA = :ID_MESA", array(
-            ":ID_MESA" => $this->getID_MESA()
-        ));
+        $sql->query("CALL st_apaga_pedido(:ID_PEDIDO)", array(
+            ":ID_PEDIDO" => $this->getID_PEDIDO()
+        ));     
+    }
     }
 }
 ?>

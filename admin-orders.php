@@ -3,6 +3,7 @@ use Portfol\PageAdmin;
 use Portfol\Model\User;
 use Portfol\Model\Order;
 use Portfol\Model\Table;
+use Portfol\Model\Cliente;
 
 $app->get("/admin/orders", function(){
     User::verifyLogin();
@@ -16,43 +17,49 @@ $app->get("/admin/orders", function(){
 
 $app->get("/admin/orders/create", function(){
     User::verifyLogin();  
+    $freeTables = Table::listEmpty();
     $page = new PageAdmin();
-    $page->setTpl("orders-create");
+    $page->setTpl("orders-create", array(
+        "freeTables"=>$freeTables
+    ));
 });
 
 
 $app->post("/admin/orders/create", function(){
         User::verifyLogin();
-        $order = new Order();
-        $order->setData($_POST);
+        $cliente = new Cliente();
         
+        $order = new Order();
+
+        $cliente->setData($_POST);
+        $cliente->save();
+        $idCliente = $cliente->getID_CLIENTE();
+        $_POST["ID_CLIENTE"] = $idCliente;
+        $order->setData($_POST);
         $order->save();
         header("Location: /admin/orders");
         exit;
     });
-// $app->get("/admin/tables", function(){
-//     User::verifyLogin();
-//     $tables = Table::listAll();
-//     $page = new PageAdmin();
-//     $page->setTpl("tables", array(
-//         "tables"=>$tables
-//     ));
-// });
 
-// $app->get("/admin/tables/create", function(){
-//     User::verifyLogin();
-//     $page = new PageAdmin();
-//     $page->setTpl("tables-create");
-// });
+    $app->get("/admin/orders/:ID_PEDIDO/delete", function($idPedido){
+        User::verifyLogin();
+        $order = new Order();
+        $order->get((int)$idPedido);
+        $order->delete();
+        header("Location: /admin/orders");
+        exit;
+    });
 
-// $app->post("/admin/tables/create", function(){
-//     User::verifyLogin();
-//     $table = new Table();
-//     $table->setData($_POST);
-//     $table->save();
-//     header("Location: /admin/tables");
-//     exit;
-// });
+    $app->get("/admin/orders/:ID_PEDIDO", function($idPedido){
+        User::verifyLogin();
+        $order = new Order();
+        $order->get((int)$idPedido);
+       
+        $page = new PageAdmin();
+        $page->setTpl("orders-update", array(
+        "order"  =>  $order->getValues()
+    ));
+    });
 
 // $app->get("/admin/tables/:ID_MESA/delete", function($idmesa){
 //     User::verifyLogin();

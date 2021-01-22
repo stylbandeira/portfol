@@ -44,7 +44,7 @@
                     <td style = {if="$value.STATUS_PEDIDO == 'ABERTO'"}"color: green"{else}"color: red"{/if}><b>{$value.STATUS_PEDIDO}</b></td>
                     <td><a href="/admin/orders/{$value.ID_PEDIDO}" class="btn btn-primary btn-xs"{if="$value.ID_PEDIDO == NULL"}disabled{else}Não{/if}><i class="fa fa-cart"></i>Abrir Pedido</a></td>
                     <td>
-                      <a href="/admin/orders/{$value.ID_PEDIDO}/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Finalizar</a>
+                      <a {if="$value.VAL_TOTAL == 0"} href="/admin/orders/{$value.ID_PEDIDO}/delete" onclick="return confirm('Deseja realmente excluir este registro?')" {else}onclick="return confirm('O pedido não foi pago ainda')"{/if} class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Finalizar</a>
                     </td>
                   </tr>
                   {/loop}

@@ -27,25 +27,29 @@
               <div class="box-body">
                 <div class="form-group">
                     <label for="ID_MESA">ID_MESA</label>
-                    <input type="number" class="form-control" id="ID_MESA" name="ID_MESA" placeholder="Digite o ID_MESA">
-                </div>
-                <div class="form-group">
-                  <label for="ID_CLIENTE">ID DO CLIENTE</label>
-                  <input type="number" class="form-control" id="ID_CLIENTE" name="ID_CLIENTE" placeholder="Digite o ID do cliente">
-                </div>
-                <div class="form-group">
-                  <label for="TIPO_PEDIDO">Preço</label>
-                  <input type="text" class="form-control" id="TIPO_PEDIDO" name="TIPO_PEDIDO" placeholder="Digite o TIPO_PEDIDO">
-                </div>
-                <div class="form-group">
-                    <label for="VAL_TOTAL">Preço</label>
-                    <input type="number" class="form-control" id="VAL_TOTAL" name="VAL_TOTAL" placeholder="DIGITE O VAL_TOTAL">
-                </div>
+                    <select class="form-control" id="ID_MESA" name="ID_MESA">
+                      <?php $counter1=-1;  if( isset($freeTables) && ( is_array($freeTables) || $freeTables instanceof Traversable ) && sizeof($freeTables) ) foreach( $freeTables as $key1 => $value1 ){ $counter1++; ?>
 
-                <div class="form-group">
-                    <label for="STATUS_PEDIDO">STATUS_PEDIDO</label>
-                    <input type="text" class="form-control" id="STATUS_PEDIDO" name="STATUS_PEDIDO" placeholder="DIGITE O STATUS_PEDIDO">
+                      <option><?php echo htmlspecialchars( $value1["ID_MESA"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                      <?php } ?>
+
+                    </select>
+                    <!-- <input type="number" class="form-control" id="ID_MESA" name="ID_MESA" placeholder="Digite o ID_MESA"> -->
                 </div>
+                <div class="form-group">
+                  <label for="NOME_CLIENTE">Nome do Cliente</label>
+                  <input type="text" class="form-control" id="NOME_CLIENTE" name="NOME_CLIENTE" placeholder="Digite o nome do cliente">
+                </div>
+                <div class="form-group">
+                  <label for="TIPO_PEDIDO">Tipo de Pedido</label>
+                  <select class="form-control" id="TIPO_PEDIDO" name="TIPO_PEDIDO">
+                    <option>LOCAL</option>
+                    <option>DELIVERY</option>
+                  </select>
+                  <!-- <input type="text" class="form-control" id="TIPO_PEDIDO" name="TIPO_PEDIDO" placeholder="Digite o TIPO_PEDIDO"> -->
+                </div>
+                
+                
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
