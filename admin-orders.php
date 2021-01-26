@@ -57,8 +57,17 @@ $app->post("/admin/orders/create", function(){
        
         $page = new PageAdmin();
         $page->setTpl("orders-update", array(
-        "order"  =>  $order->getValues()
+        "order"  =>  $order->getOrderData($idPedido),
+        "orderItens" => $order->orderItens($idPedido)
     ));
+    });
+
+    $app->get("/admin/orders/:ID_PEDIDO/pay", function($idPedido){
+        User::verifyLogin();
+        $order = new Order();
+        $order->payOrder((int)$idPedido);
+        header("Location: /admin/orders/:ID_PEDIDO", $idPedido);
+        exit;
     });
 
 // $app->get("/admin/tables/:ID_MESA/delete", function($idmesa){
