@@ -66,7 +66,7 @@ $app->post("/admin/orders/create", function(){
         User::verifyLogin();
         $order = new Order();
         $order->payOrder((int)$idPedido);
-        header("Location: /admin/orders/:ID_PEDIDO", $idPedido);
+        header("Location: /admin/orders");
         exit;
     });
 

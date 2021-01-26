@@ -36,10 +36,10 @@
                   <?php $counter1=-1;  if( isset($tables) && ( is_array($tables) || $tables instanceof Traversable ) && sizeof($tables) ) foreach( $tables as $key1 => $value1 ){ $counter1++; ?>
                   <tr>
                     <td><?php echo htmlspecialchars( $value1["ID_MESA"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                    <td><a href="/admin/tables/<?php echo htmlspecialchars( $value1["ID_PEDIDO"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"<?php if( $value1["ID_PEDIDO"] == NULL ){ ?>disabled<?php }else{ ?>Não<?php } ?>><i class="fa fa-cart"></i> Pedido</a></td>
+                    <td><a href="/admin/orders/<?php echo htmlspecialchars( $value1["ID_PEDIDO"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"<?php if( $value1["ID_PEDIDO"] == NULL ){ ?>disabled<?php }else{ ?>Não<?php } ?>><i class="fa fa-cart"></i> Pedido</a></td>
                     <td><?php echo htmlspecialchars( $value1["ID_PEDIDO"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                     <td>
-                      <a href="/admin/tables/<?php echo htmlspecialchars( $value1["ID_MESA"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
+                      <a <?php if( $value1["ID_PEDIDO"] !== NULL ){ ?>disabled<?php }else{ ?> href="/admin/tables/<?php echo htmlspecialchars( $value1["ID_MESA"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir este registro?')"<?php } ?> class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
                     </td>
                   </tr>
                   <?php } ?>

@@ -36,10 +36,10 @@
                   {loop="$tables"}
                   <tr>
                     <td>{$value.ID_MESA}</td>
-                    <td><a href="/admin/tables/{$value.ID_PEDIDO}" class="btn btn-primary btn-xs"{if="$value.ID_PEDIDO == NULL"}disabled{else}Não{/if}><i class="fa fa-cart"></i> Pedido</a></td>
+                    <td><a href="/admin/orders/{$value.ID_PEDIDO}" class="btn btn-primary btn-xs"{if="$value.ID_PEDIDO == NULL"}disabled{else}Não{/if}><i class="fa fa-cart"></i> Pedido</a></td>
                     <td>{$value.ID_PEDIDO}</td>
                     <td>
-                      <a href="/admin/tables/{$value.ID_MESA}/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
+                      <a {if="$value.ID_PEDIDO !== NULL"}disabled{else} href="/admin/tables/{$value.ID_MESA}/delete" onclick="return confirm('Deseja realmente excluir este registro?')"{/if} class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
                     </td>
                   </tr>
                   {/loop}

@@ -48,10 +48,10 @@ class Order extends Model{
         $this->setData($results[0]);
     }
 
-    public function get($idpedido){
+    public function get($idPedido){
         $sql = new Sql();
         $results = $sql->select("SELECT * FROM pedido WHERE ID_PEDIDO = :ID_PEDIDO", array(
-            ":ID_PEDIDO" => $idpedido 
+            ":ID_PEDIDO" => $idPedido 
         ));        
         $this->setData($results[0]);
     }
@@ -92,8 +92,6 @@ class Order extends Model{
         }
         else {
             $results = $sql->select("SELECT * FROM pedido p
-                                INNER JOIN log_pedidos l
-                                ON p.ID_PEDIDO = l.ID_PEDIDO
                                 INNER JOIN cliente c
                                 ON c.ID_CLIENTE = p.ID_CLIENTE
                                 WHERE p.ID_PEDIDO = :ID_PEDIDO;", array(
@@ -107,7 +105,8 @@ class Order extends Model{
     public function payOrder($idPedido){
         $sql = new Sql();
         $results = $sql->select("UPDATE pedido 
-                                SET STATUS_PEDIDO = 'PAGO'
+                                SET STATUS_PEDIDO = 'PAGO',
+                                ID_MESA = NULL
                                 WHERE ID_PEDIDO = :ID_PEDIDO", array(
                                     ":ID_PEDIDO"=>$idPedido
                                 ));
