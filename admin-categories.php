@@ -59,13 +59,5 @@ $app->post("/admin/categories/:ID_CATEGORIA", function($idcategory){
     exit;
 });
 
-$app->get("/categories/:ID_CATEGORIA", function($ID_CATEGORIA){
-    $category = new Category();
-    $category->get((int)$ID_CATEGORIA);
-    $page = new Page();
-    $page->setTpl("category", array(
-        'category'=>$category->getValues(),
-        'products'=>[]
-    ));
-});
+
 ?>

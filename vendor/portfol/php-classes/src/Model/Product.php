@@ -21,6 +21,14 @@ class Product extends Model{
         }
         return $list;
     }
+    public static function categoryProducts($idCategory){
+        $sql = new Sql();
+        $results = $sql->select("SELECT * FROM itens  WHERE ID_CATEGORIA = :ID_CATEGORIA", array(
+            ':ID_CATEGORIA'=>$idCategory
+        ));
+
+        return $results;
+    }
 
     public function save(){
         $sql = new Sql();
