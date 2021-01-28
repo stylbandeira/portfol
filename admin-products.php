@@ -2,6 +2,7 @@
 use Portfol\PageAdmin;
 use Portfol\Model\User;
 use Portfol\Model\Product;
+use Portfol\Model\Category;
 
 $app->get("/admin/products", function(){
     User::verifyLogin();
@@ -15,7 +16,10 @@ $app->get("/admin/products", function(){
 $app->get("/admin/products/create", function(){
     User::verifyLogin();
     $page = new PageAdmin();
-    $page->setTpl("products-create");
+    $category = Category::listAll();
+    $page->setTpl("products-create", array(
+        "categorias"=> $category
+    ));
 });
 
 $app->post("/admin/products/create", function(){
@@ -31,10 +35,12 @@ $app->get("/admin/products/:ID_ITEM", function($idproduct){
     User::verifyLogin();
     $product = new Product();
     $product->get((int)$idproduct);
+    $category = Category::listAll();
 
     $page = new PageAdmin();
     $page->setTpl("products-update", array(
-        'product'=>$product->getValues()
+        'product'=>$product->getValues(),
+        'categorias'=>$category
     ));
 });
 

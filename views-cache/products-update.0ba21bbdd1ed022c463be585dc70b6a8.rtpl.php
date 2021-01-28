@@ -29,6 +29,23 @@
               <input type="number" class="form-control" id="PRECO_ITEM" name="PRECO_ITEM" step="0.01" placeholder="0.00" value="<?php echo htmlspecialchars( $product["PRECO_ITEM"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>
             <div class="form-group">
+              <label for="ID_CATEGORIA">Categoria</label>
+              <select class="form-control" id="ID_CATEGORIA" name="ID_CATEGORIA">
+                <?php if( $product["ID_CATEGORIA"] == 'NULL' OR $product["ID_CATEGORIA"] == '' ){ ?><option value="">Selecione a Categoria</option>
+                <?php }else{ ?>
+
+                <?php } ?>
+
+                <?php $counter1=-1;  if( isset($categorias) && ( is_array($categorias) || $categorias instanceof Traversable ) && sizeof($categorias) ) foreach( $categorias as $key1 => $value1 ){ $counter1++; ?>
+
+                
+                <option value="<?php echo htmlspecialchars( $value1["ID_CATEGORIA"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" <?php if( $product["ID_CATEGORIA"] == $value1["ID_CATEGORIA"] ){ ?>selected<?php }else{ ?><?php } ?>><?php echo htmlspecialchars( $value1["DESC_CATEGORIA"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                <?php } ?>
+
+              </select>
+
+            </div>
+            <div class="form-group">
               <label for="file">Foto</label>
               <input type="file" class="form-control" id="file" name="file" value="<?php echo htmlspecialchars( $product["SRC_IMG"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
               <div class="box box-widget">

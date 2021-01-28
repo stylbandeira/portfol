@@ -33,6 +33,17 @@
               <label for="PRECO_ITEM">Preço</label>
               <input type="number" class="form-control" id="PRECO_ITEM" name="PRECO_ITEM" step="0.01" placeholder="0.00">
             </div>
+            <div class="form-group">
+              <label for="ID_CATEGORIA">Categoria</label>
+              <select class="form-control" id="ID_CATEGORIA" name="ID_CATEGORIA">
+                <?php $counter1=-1;  if( isset($categorias) && ( is_array($categorias) || $categorias instanceof Traversable ) && sizeof($categorias) ) foreach( $categorias as $key1 => $value1 ){ $counter1++; ?>
+
+                <option value="<?php echo htmlspecialchars( $value1["ID_CATEGORIA"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["DESC_CATEGORIA"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                <?php } ?>
+
+              </select>
+
+            </div>
 
             <div class="form-group">
               <label for="SRC_IMG">URL</label>

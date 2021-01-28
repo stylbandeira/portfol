@@ -28,12 +28,14 @@ class Product extends Model{
                         :ID_ITEM, 
                         :NOME_ITEM,
                         :PRECO_ITEM,
-                        :SRC_IMG 
+                        :SRC_IMG,
+                        :ID_CATEGORIA 
                         )", array(
                             ":ID_ITEM"    =>  $this->getID_ITEM(),
                             ":NOME_ITEM"     =>  $this->getNOME_ITEM(),
                             ":PRECO_ITEM" => $this->getPRECO_ITEM(),
-                            ":SRC_IMG" => $this->getSRC_IMG()
+                            ":SRC_IMG" => $this->getSRC_IMG(),
+                            ":ID_CATEGORIA" => $this->getID_CATEGORIA()
                         ));
         $this->setData($results[0]);
     }
