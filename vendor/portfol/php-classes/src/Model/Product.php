@@ -13,6 +13,15 @@ class Product extends Model{
         return $sql->select("SELECT * FROM itens ORDER BY NOME_ITEM");
     }
 
+    public static function checkList($list){
+        foreach ($list as $row) {
+            $p = new Product();
+            $p->setData($row);
+            $row = $p->getValues();
+        }
+        return $list;
+    }
+
     public function save(){
         $sql = new Sql();
         $results = $sql->select("CALL st_products_save (
