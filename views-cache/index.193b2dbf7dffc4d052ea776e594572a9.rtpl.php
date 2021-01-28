@@ -26,7 +26,7 @@
                                     </div>
                                     <h2><a href="/itens/<?php echo htmlspecialchars( $value1["SRC_IMG"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["NOME_ITEM"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a></h2>
                                     <div class="product-carousel-price">
-                                        <ins>R$<?php echo htmlspecialchars( $value1["PRECO_ITEM"], ENT_COMPAT, 'UTF-8', FALSE ); ?></ins>
+                                        <ins>R$<?php echo formatPrice($value1["PRECO_ITEM"]); ?></ins>
                                     </div>
                                 </div>
                             <?php } ?>

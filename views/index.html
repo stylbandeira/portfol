@@ -26,7 +26,7 @@
                                     </div>
                                     <h2><a href="/itens/{$value.SRC_IMG}">{$value.NOME_ITEM}</a></h2>
                                     <div class="product-carousel-price">
-                                        <ins>R${$value.PRECO_ITEM}</ins>
+                                        <ins>R${function="formatPrice($value.PRECO_ITEM)"}</ins>
                                     </div>
                                 </div>
                             {/loop}
