@@ -1,40 +1,67 @@
-<?php if(!class_exists('Rain\Tpl')){exit;}?><br>
-<br>
-<main class="container">
-    <div class="bg-light p-5 rounded">
-      <h1>Navbar example</h1>
-      <p class="lead">This example is a quick exercise to illustrate how fixed to top navbar works. As you scroll, it will remain fixed to the top of your browser’s viewport.</p>
-      <a class="btn btn-lg btn-primary" href="#" role="button">View navbar docs &raquo;</a>
-    </div>
+<?php if(!class_exists('Rain\Tpl')){exit;}?><main>
 
-    <div class="maincontent-area">
-        <div class="zigzag-bottom"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="latest-product">
-                        <h2 class="section-title">Produtos</h2>
-                        <div class="product-carousel">
-                            <?php $counter1=-1;  if( isset($itens) && ( is_array($itens) || $itens instanceof Traversable ) && sizeof($itens) ) foreach( $itens as $key1 => $value1 ){ $counter1++; ?>
-                                <div class="single-product">
-                                    <div class="product-f-image">
-                                        <img src="/res/site/img/products/<?php echo htmlspecialchars( $value1["ID_ITEM"], ENT_COMPAT, 'UTF-8', FALSE ); ?>.jpg" alt="">
-                                        <div class="product-hover">
-                                            <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart">Comprar</i></a>
-                                            <a href="/itens/<?php echo htmlspecialchars( $value1["SRC_IMG"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="view-details-link"><i class="fa fa-link">Ver Detalhes</i></a>
-                                        </div>
-                                    </div>
-                                    <h2><a href="/itens/<?php echo htmlspecialchars( $value1["SRC_IMG"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["NOME_ITEM"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a></h2>
-                                    <div class="product-carousel-price">
-                                        <ins>R$<?php echo formatPrice($value1["PRECO_ITEM"]); ?></ins>
-                                    </div>
-                                </div>
-                            <?php } ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <section class="py-5 text-center container">
+      <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+          <h1 class="fw-light">Onde você está?</h1>
+          <p class="lead text-muted">Uma experiência de barzinho, onde quer que você esteja.</p>
+          <p>
+            <a href="/order" class="btn btn-primary my-2">Estou em uma mesa</a>
+            <a href="#" class="btn btn-secondary my-2">Estou em casa</a>
+          </p>
         </div>
-
+      </div>
+    </section>
+  
+    <div class="album py-5 bg-light">
+      <div class="container">
+  
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <?php $counter1=-1;  if( isset($itens) && ( is_array($itens) || $itens instanceof Traversable ) && sizeof($itens) ) foreach( $itens as $key1 => $value1 ){ $counter1++; ?>
+          <div class="col">
+            <div class="card shadow-sm">
+              <!-- <img class="imgCrop" src="/res/site/img/products/<?php echo htmlspecialchars( $value1["ID_ITEM"], ENT_COMPAT, 'UTF-8', FALSE ); ?>.jpg" role="img" aria-label="Placeholder: Item" ><title>Placeholder</title></img> -->
+              <img class="imgCrop" src="/res/site/img/products/<?php echo htmlspecialchars( $value1["ID_ITEM"], ENT_COMPAT, 'UTF-8', FALSE ); ?>.jpg" alt="">
+  
+              <div class="card-body">
+                <p class="card-text">Aqui é onde fica uma descrição mais abrangente do item, como ingredientes, etc.</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Adicionar ao pedido</button>
+                    
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                  </div>
+                  <small class="text-muted">9 mins</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        <?php } ?> 
+          <div class="col">
+            <div class="card shadow-sm">
+              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Item" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Item</text></svg>
+  
+              <div class="card-body">
+                <p class="card-text">Aqui é onde fica uma descrição mais abrangente do item, como ingredientes, etc.</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Adicionar ao pedido</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                  </div>
+                  <small class="text-muted">9 mins</small>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
     </div>
-</main>
+  
+  </main>
+  
+  
+      <script src="dist/js/bootstrap.bundle.min.js"></script>
+  
+        
+    </body>
+  </html>
+  

@@ -431,6 +431,16 @@ z-index: 999;}
     margin-top: 15px;
 }
 
+.imgCrop{
+    max-width: 100%;
+    width: 248px;
+    height: 248px;
+    object-fit: contain;
+}
+
+.opcional{
+    color: rgb(195, 201, 201);
+}
 
 .single-product h2 a {
     color: #222;
