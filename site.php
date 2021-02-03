@@ -23,13 +23,24 @@ $app->get('/album', function() {
 });
 
 $app->get("/categories/:ID_CATEGORIA", function($ID_CATEGORIA){
+    $page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
     $category = new Category();
-    $products = Product::categoryProducts($ID_CATEGORIA);
     $category->get((int)$ID_CATEGORIA);
+    //$products = Product::categoryProducts($ID_CATEGORIA);
+    $pagination = $category->getProductsPage($page);
+    
+    $pages = array();
+    for ($i=1; $i <= $pagination['pages'] ; $i++) { 
+        array_push($pages, array(
+            'link' => '/categories/'.$category->getID_CATEGORIA().'?page='.$i,
+            'page' =>$i
+        ));
+    }
     $page = new Page();
     $page->setTpl("category", array(
         'category'=>$category->getValues(),
-        'products'=>$products
+        'products'=>$pagination["data"],
+        'pages' => $pages
     ));
 });
 

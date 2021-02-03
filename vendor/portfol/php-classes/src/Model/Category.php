@@ -34,6 +34,26 @@ class Category extends Model{
         $this->setData($results[0]);
     }
 
+    public function getProductsPage($page = 1, $itensPerPage = 8){
+        $sql = new Sql();
+        $start = ($page - 1) * $itensPerPage;
+        $results = $sql->select("SELECT SQL_CALC_FOUND_ROWS * FROM itens i
+                    INNER JOIN categorias c ON c.ID_CATEGORIA = i.ID_CATEGORIA
+                    WHERE c.ID_CATEGORIA = :ID_CATEGORIA
+                    LIMIT $start, $itensPerPage;", array(
+                        ":ID_CATEGORIA" => $this->getID_CATEGORIA()
+                    ));
+
+        $resultTotal = $sql->select("SELECT FOUND_ROWS() AS NRITENS;");
+
+        return array(
+            'data' =>Product::checkList($results),
+            'total' => (int)$resultTotal[0]['NRITENS'],
+            'pages' => ceil($resultTotal[0]['NRITENS'] / $itensPerPage)
+        );
+        
+    }
+
     public function delete(){
         $sql = new Sql();
         $sql->query("DELETE FROM categorias WHERE ID_CATEGORIA = :ID_CATEGORIA", array(
