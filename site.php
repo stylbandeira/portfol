@@ -6,6 +6,8 @@ use Portfol\Model\Category;
 use Portfol\Model\Order;
 use Portfol\Model\Cliente;
 
+require_once("functions.php");
+
 
 $app->get('/', function() {
     $itens = Product::listAll();
@@ -54,11 +56,27 @@ $app->post("/order", function(){
 });
 
 $app->get("/order/:ID_PEDIDO", function($idPedido){
+    $itens = Product::listAll();
     $page = new Page();
     $order = new Order();
     $order->get((int)$idPedido);
     $page->setTpl("order-itens", array(
-        'order' => $order->getValues()
+        'order' => $order->getValues(),
+        'orderItens' => $order->orderItens($idPedido),
+        'itens' => Product::checkList($itens)
     ));
 });
+
+$app->post("/order/:ID_PEDIDO/:ID_ITEM/add", function($idPedido, $idItem){
+    $item = new Product();
+    $item->get((int)$idItem);
+    $order = new Order();
+    $order->get((int)$idPedido);
+    $qtd = $_POST['QTD'];
+
+    $order->addItem($item, $qtd);
+    header("Location: /order/".$idPedido);
+    exit;
+});
+
 ?>

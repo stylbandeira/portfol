@@ -9,13 +9,21 @@ class Order extends Model{
 
     public static function listAll(){
         $sql = new SQL();
-        return $sql->select("SELECT * FROM pedido p
-                            INNER JOIN log_pedidos l
-                            ON p.ID_PEDIDO = l.ID_PEDIDO
-                            INNER JOIN cliente c
-                            ON c.ID_CLIENTE = p.ID_CLIENTE
-                            INNER JOIN mesa m 
-                            ON m.ID_PEDIDO = p.ID_PEDIDO;");
+        return $sql->select("SELECT p.ID_PEDIDO, p.ID_CLIENTE, p.TIPO_PEDIDO, p.VAL_TOTAL, p.STATUS_PEDIDO, p.ID_MESA, c.NOME_CLIENTE FROM pedido p
+        INNER JOIN cliente c
+        ON c.ID_CLIENTE = p.ID_CLIENTE
+        INNER JOIN mesa m
+        GROUP BY p.ID_PEDIDO;");
+    }
+
+    public static function listOpen(){
+        $sql = new SQL();
+        return $sql->select("SELECT p.ID_PEDIDO, p.ID_CLIENTE, p.TIPO_PEDIDO, p.VAL_TOTAL, p.STATUS_PEDIDO, p.ID_MESA, c.NOME_CLIENTE FROM pedido p
+        INNER JOIN cliente c
+        ON c.ID_CLIENTE = p.ID_CLIENTE
+        INNER JOIN mesa m
+        WHERE p.STATUS_PEDIDO = 'ABERTO'
+        GROUP BY p.ID_PEDIDO;");
     }
 
     public function orderItens($idorder){
@@ -56,18 +64,17 @@ class Order extends Model{
         $this->setData($results[0]);
     }
 
-    public function addItem($idItem, $qtd){
+    public function addItem($item, $qtd){
         $sql = new Sql();
         $results = $sql->select("CALL st_addItem(
                         :ID_ITEM,
                         :QTD,
                         :ID_PEDIDO
                     )", array(
-                        ":ID_ITEM" =>$idItem,
+                        ":ID_ITEM" =>$item->getID_ITEM(),
                         ":QTD" => $qtd,
                         ":ID_PEDIDO" => $this->getID_PEDIDO()
                     ));
-
         $this->setData($results[0]);
     }
 
@@ -105,8 +112,7 @@ class Order extends Model{
     public function payOrder($idPedido){
         $sql = new Sql();
         $results = $sql->select("UPDATE pedido 
-                                SET STATUS_PEDIDO = 'PAGO',
-                                ID_MESA = NULL
+                                SET STATUS_PEDIDO = 'PAGO'
                                 WHERE ID_PEDIDO = :ID_PEDIDO", array(
                                     ":ID_PEDIDO"=>$idPedido
                                 ));

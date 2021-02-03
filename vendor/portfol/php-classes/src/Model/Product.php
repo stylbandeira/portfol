@@ -10,7 +10,7 @@ class Product extends Model{
 
     public static function listAll(){
         $sql = new SQL();
-        return $sql->select("SELECT * FROM itens ORDER BY NOME_ITEM");
+        return $sql->select("SELECT * FROM itens ORDER BY ID_ITEM");
     }
 
     public static function checkList($list){
@@ -64,11 +64,11 @@ class Product extends Model{
     }
 
     public function checkPhoto(){
-        if (file_exists($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR . 
-        "res". DIRECTORY_SEPARATOR . 
-        "site". DIRECTORY_SEPARATOR .
-        "img". DIRECTORY_SEPARATOR .
-        "products". DIRECTORY_SEPARATOR .
+        if (file_exists($_SERVER['DOCUMENT_ROOT']. '/' . 
+        "res". '/' . 
+        "site". '/' .
+        "img". '/' .
+        "products". '/' .
         $this->getID_ITEM().".jpg")) {
             $url = "/res/site/img/products/".$this->getID_ITEM().".jpg";
         } else {
@@ -91,6 +91,8 @@ class Product extends Model{
 
         switch ($extension) {
             case 'jpg':
+                $image = imagecreatefromjpeg($file["tmp_name"]);
+                break;
             case 'jpeg':
                 $image = imagecreatefromjpeg($file["tmp_name"]);
                 break;

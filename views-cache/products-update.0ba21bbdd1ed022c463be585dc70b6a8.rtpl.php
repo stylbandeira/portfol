@@ -50,7 +50,7 @@
               <input type="file" class="form-control" id="file" name="file" value="<?php echo htmlspecialchars( $product["SRC_IMG"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
               <div class="box box-widget">
                 <div class="box-body">
-                  <img class="img-responsive" id="image-preview" src="<?php echo htmlspecialchars( $product["SRC_IMG"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" alt="Photo">
+                  <img class="img-responsive" id="image-preview" src="/res/site/img/products/<?php echo htmlspecialchars( $product["ID_ITEM"], ENT_COMPAT, 'UTF-8', FALSE ); ?>.jpg" alt="Photo">
                 </div>
               </div>
             </div>

@@ -7,7 +7,7 @@ use Portfol\Model\Cliente;
 
 $app->get("/admin/orders", function(){
     User::verifyLogin();
-    $orders = Order::listAll();
+    $orders = Order::listOpen();
     
     $page = new PageAdmin();
     $page->setTpl("orders", array(
