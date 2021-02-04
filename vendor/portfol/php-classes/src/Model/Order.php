@@ -3,9 +3,59 @@ namespace Portfol\Model;
 
 use Portfol\DB\Sql;
 use Portfol\Model;
+use Portfol\Model\User;
 
 
 class Order extends Model{
+    const SESSION = "Order";
+
+    public static function getFromSession(){
+        $order = new Order();
+        
+        if (isset($_SESSION[Order::SESSION]) && 
+            ((int)$_SESSION[Order::SESSION]['ID_PEDIDO']) > 0){
+                $order->get((int)$_SESSION[Order::SESSION]['ID_PEDIDO']);
+            } 
+        else{
+            
+            $order->getFromSessionID();
+            if (!(int)$order->getID_PEDIDO() > 0) {
+                // $cliente = new Cliente();
+                // $dadosCliente = array(
+                //     'NOME_CLIENTE' => 'ClienteTemporario_'.session_id()
+                // ); 
+                // $cliente->setData($dadosCliente);
+                // $cliente->save();
+
+                // $data = array(
+                //     'ID_SESSAO' => session_id(),
+                //     'ID_CLIENTE' => $cliente->getNOME_CLIENTE(),
+                //     'TIPO_PEDIDO' => 'LOCAL'
+                // );
+                // if (User::checkLogin(false)) {
+                //     $user = User::getFromSession();
+                //     $data['ID_USUARIO'] = $user->getID_USUARIO();
+                // }
+                // $order->save();
+                // $order->setToSession();
+            }
+        }
+    }
+
+    public function setToSession(){
+        $_SESSION[Order::SESSION] = $this->getValues();
+    }
+
+    public function getFromSessionID(){
+        $sql = new Sql();
+        $results = $sql->select("SELECT * FROM pedido WHERE ID_SESSAO = :ID_SESSAO 
+                                AND STATUS_PEDIDO = 'ABERTO'", array(
+            ':ID_SESSAO' => session_id()
+        ));
+        if (count($results) > 0) {
+            $this->setData($results[0]);
+        }
+    }
 
     public static function listAll(){
         $sql = new SQL();
@@ -45,13 +95,15 @@ class Order extends Model{
                         :ID_PEDIDO, 
                         :ID_CLIENTE,
                         :TIPO_PEDIDO,
-                        :STATUS_PEDIDO
+                        :STATUS_PEDIDO,
+                        :ID_SESSAO
                         )", array(
                             ":ID_MESA" => $this->getID_MESA(),
                             ":ID_PEDIDO"    =>  $this->getID_PEDIDO(),
                             ":ID_CLIENTE"     =>  $this->getID_CLIENTE(),
                             ":TIPO_PEDIDO" => $this->getTIPO_PEDIDO(),
-                            ":STATUS_PEDIDO" => "ABERTO"
+                            ":STATUS_PEDIDO" => "ABERTO",
+                            ":ID_SESSAO" =>session_id()
                         ));
         $this->setData($results[0]);
     }
@@ -61,7 +113,9 @@ class Order extends Model{
         $results = $sql->select("SELECT * FROM pedido WHERE ID_PEDIDO = :ID_PEDIDO", array(
             ":ID_PEDIDO" => $idPedido 
         ));        
-        $this->setData($results[0]);
+        if (count($results) > 0) {
+            $this->setData($results[0]);
+        }
     }
 
     public function addItem($item, $qtd){

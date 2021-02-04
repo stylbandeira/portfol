@@ -9,7 +9,36 @@ use Portfol\Mailer;
 class User extends Model{
     const SESSION = "User";
     const SECRET = "HcodePhp7_Secret";
-	const SECRET_IV = "HcodePhp7_Secret_IV";
+    const SECRET_IV = "HcodePhp7_Secret_IV";
+    
+    public static function getFromSession(){
+        $user = new User();
+        if (isset($_SESSION[User::SESSION]) && ((int)$_SESSION[User::SESSION]['ID_USUARIO']) > 0) {
+            $user->setData($_SESSION[User::SESSION]);
+        }
+        
+        return $user;
+    }
+
+    public static function checkLogin($inAdmin = true){
+        if(!isset($_SESSION[User::SESSION])
+            || 
+            !$_SESSION[User::SESSION]
+            ||
+            !(int)$_SESSION[User::SESSION]["ID_USUARIO"] > 0){
+                //não está logado
+                return false;
+                
+            } else{
+                if ($inAdmin === true && ((bool)$_SESSION[User::SESSION]['ISADMIN_USUARIO'] === true)) {
+                    return true;
+                } else if ($inAdmin === false){
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+    }
 
     public static function login($login, $password){
         $sql = new Sql();
@@ -35,13 +64,7 @@ class User extends Model{
     }
     
     public static function verifyLogin($inAdmin = true){
-        if (!isset($_SESSION[User::SESSION])
-            || 
-            !$_SESSION[User::SESSION]
-            ||
-            !(int)$_SESSION[User::SESSION]["ID_USUARIO"] > 0
-            ||
-            (bool)$_SESSION[User::SESSION]["ISADMIN_USUARIO"] != $inAdmin) {
+        if (!User::checkLogin($inAdmin)) {
             header("Location: /admin/login");
             exit;
         }

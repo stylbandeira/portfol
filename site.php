@@ -46,6 +46,11 @@ $app->get("/categories/:ID_CATEGORIA", function($ID_CATEGORIA){
 
 $app->get("/order", function(){
     $page = new Page();
+    if (isset($_SESSION['Order'])) {
+        // $order->getFromSession();
+        header("Location: /order/".$_SESSION['Order']['ID_PEDIDO']);
+        exit;
+    } 
     $freeTables = Table::listEmpty();
     $page->setTpl("order", array(
         'freeTables' => $freeTables
@@ -54,6 +59,7 @@ $app->get("/order", function(){
 
 $app->post("/order", function(){
     $order = new Order();
+    
     $cliente = new Cliente();
     $cliente->setData($_POST);
     $cliente->save();
@@ -71,6 +77,7 @@ $app->get("/order/:ID_PEDIDO", function($idPedido){
     $page = new Page();
     $order = new Order();
     $order->get((int)$idPedido);
+    $order->setToSession();
     $page->setTpl("order-itens", array(
         'order' => $order->getValues(),
         'orderItens' => $order->orderItens($idPedido),
