@@ -46,7 +46,7 @@ $app->get("/categories/:ID_CATEGORIA", function($ID_CATEGORIA){
 
 $app->get("/order", function(){
     $page = new Page();
-    if (isset($_SESSION['Order'])) {
+    if (isset($_SESSION['Order']) && ($_SESSION['Order']['STATUS_PEDIDO'] === 'ABERTO')) {
         // $order->getFromSession();
         header("Location: /order/".$_SESSION['Order']['ID_PEDIDO']);
         exit;
@@ -83,6 +83,17 @@ $app->get("/order/:ID_PEDIDO", function($idPedido){
         'orderItens' => $order->orderItens($idPedido),
         'itens' => Product::checkList($itens)
     ));
+});
+
+$app->get("/order/:ID_PEDIDO/pay", function($idPedido){
+    $order = new Order();
+    
+
+    //IR PARA FORMA DE PAGAMENTO
+    $order->payOrder((int)$idPedido);
+    //IR PARA FORMA DE PAGAMENTO
+    header("Location: /");
+    exit;
 });
 
 $app->post("/order/:ID_PEDIDO/:ID_ITEM/add", function($idPedido, $idItem){

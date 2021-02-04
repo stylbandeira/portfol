@@ -16,10 +16,12 @@ class Cliente extends Model{
         $sql = new Sql();
         $results = $sql->select("CALL st_cliente_save (
                         :ID_CLIENTE, 
-                        :NOME_CLIENTE
+                        :NOME_CLIENTE,
+                        :ID_USUARIO
                         )", array(
                             ":ID_CLIENTE"    =>  $this->getID_CLIENTE(),
-                            ":NOME_CLIENTE"     =>  $this->getNOME_CLIENTE()
+                            ":NOME_CLIENTE"     =>  $this->getNOME_CLIENTE(),
+                            ":ID_USUARIO" => $this->getID_USUARIO()
                         ));
         $this->setData($results[0]);
     }

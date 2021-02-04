@@ -473,6 +473,10 @@ z-index: 999;}
     color: black;
 }
 
+.ST_divAway{
+    padding-top: 20px;
+}
+
 .IPFoto{
     display: flex;
     justify-content: center;
