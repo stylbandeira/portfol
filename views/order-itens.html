@@ -1,0 +1,103 @@
+<main>
+
+    <section class="py-5 text-center container">
+        <div class="container">
+            <h2>Detalhes do Pedido</h2>
+        </div>
+    </section>
+
+    <div class="container">
+      <div class="row">
+        <!-- ADICIONAR AO PEDIDO -->
+        <div class="col-md-6">
+          <section class="container">
+            <div class="container">
+              <div class="row">
+                {loop="$itens"}
+                <div class="col-md-6 col-lg-4 col-sm-6">
+                  <div class="card">
+
+                    
+                    <!-- FORM -->
+                    <form role="form" action="/order/{$order.ID_PEDIDO}/{$value.ID_ITEM}/add" method="post">
+                      
+                      <div class="itensPedido">
+                        <div class="IPItem">{$value.NOME_ITEM}</div>
+                        <div class="IPFoto">
+                          <img class="imgItemPedido" src="/res/site/img/products/{$value.ID_ITEM}" alt="">
+                        </div>
+                        <div class="card">
+                          <input type="number" for="QTD" name="QTD" id="QTD" placeholder="Quantidade">
+                        </div>
+                        <div class="IPBotoes">
+                          <button><i class="fa fa-arrow-right" aria-hidden="true" action="/order/{$order.ID_PEDIDO}/{$value.ID_ITEM}/add" method="post"></i></button>
+                        </div>
+                      </div>
+                    </form>
+                    <!-- FORM -->
+                    
+                  </div>
+                </div>
+              {/loop} 
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- DETALHES DO PEDIDO -->
+        <div class="col-md-6">
+          <section class="container">
+            <div class="container">
+              <div class="row">
+                  <div class="col-md-6">
+                    <h3>Mesa :{$order.ID_MESA}</h3>
+                  </div>
+                  <div class="col-md-6" style="text-align: right;">
+                    <h3>Nº Pedido : {$order.ID_PEDIDO}</h3>
+                  </div>
+              </div>
+  
+              <div class="row order-itens">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Item</th>
+                      <th>Quantidade</th>
+                      <th style="text-align: right;">Valor</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {loop="$orderItens"}
+                    <tr>
+                      <td>{$value.NOME_ITEM}</td>
+                      <td>{$value.QTD}</td>
+                      <td style="text-align: right;">R${function="formatPrice($value.VAL_PARCIAL)"}</td>
+                    </tr>
+                    {/loop}
+                  
+                  </tbody>
+                </table>
+                <h4 style="text-align: right;">Valor Total : R${function="formatPrice($order.VAL_TOTAL)"}</h4>
+              </div>
+              <div class="ST_divAway">
+                <!-- FALTA IMPLEMENTAR PARA REDIRECIONAR À FORMA DE PAGAMENTO -->
+                <a type="button" class="btn btn-success" href="/order/{$order.ID_PEDIDO}/pay">Pagar</a>
+              </div>
+            </div>
+      </section>        
+        </div>
+      </div>
+    </div>
+    
+  
+
+  
+  </main>
+  
+  
+      <script src="dist/js/bootstrap.bundle.min.js"></script>
+  
+        
+    </body>
+  </html>
+  

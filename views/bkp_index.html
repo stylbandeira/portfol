@@ -1,0 +1,40 @@
+<br>
+<br>
+<main class="container">
+    <div class="bg-light p-5 rounded">
+      <h1>Navbar example</h1>
+      <p class="lead">This example is a quick exercise to illustrate how fixed to top navbar works. As you scroll, it will remain fixed to the top of your browser’s viewport.</p>
+      <a class="btn btn-lg btn-primary" href="#" role="button">View navbar docs &raquo;</a>
+    </div>
+
+    <div class="maincontent-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="latest-product">
+                        <h2 class="section-title">Produtos</h2>
+                        <div class="product-carousel">
+                            {loop="$itens"}
+                                <div class="single-product">
+                                    <div class="product-f-image">
+                                        <img src="/res/site/img/products/{$value.ID_ITEM}.jpg" alt="">
+                                        <div class="product-hover">
+                                            <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart">Comprar</i></a>
+                                            <a href="/itens/{$value.SRC_IMG}" class="view-details-link"><i class="fa fa-link">Ver Detalhes</i></a>
+                                        </div>
+                                    </div>
+                                    <h2><a href="/itens/{$value.SRC_IMG}">{$value.NOME_ITEM}</a></h2>
+                                    <div class="product-carousel-price">
+                                        <ins>R${function="formatPrice($value.PRECO_ITEM)"}</ins>
+                                    </div>
+                                </div>
+                            {/loop}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
