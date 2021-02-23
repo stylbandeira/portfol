@@ -10,6 +10,7 @@ use Portfol\Model\Cliente;
 class User extends Model{
     const SESSION = "User";
     const SECRET = "HcodePhp7_Secret";
+    const ERROR = "UserError";
     const SECRET_IV = "HcodePhp7_Secret_IV";
     
     public static function getFromSession(){
@@ -22,7 +23,8 @@ class User extends Model{
     }
 
     public static function checkLogin($inAdmin = true){
-        if(!isset($_SESSION[User::SESSION])
+        if(
+            !isset($_SESSION[User::SESSION])
             || 
             !$_SESSION[User::SESSION]
             ||
@@ -66,7 +68,11 @@ class User extends Model{
     
     public static function verifyLogin($inAdmin = true){
         if (!User::checkLogin($inAdmin)) {
-            header("Location: /admin/login");
+            if ($inAdmin) {
+                header("Location: /admin/login");
+            } else {
+                header("Location: /login");
+            }
             exit;
         }
         
@@ -97,6 +103,9 @@ class User extends Model{
                             ":TELEFONE_USUARIO" =>  $this->getTELEFONE_USUARIO(),
                             ":NOME_USUARIO"     =>  $this->getNOME_USUARIO()
                         ));
+        if (count($results) === 0) {
+            throw new \Exception("Preencha os dados corretamente", 1);
+        }
         $this->setData($results[0]);
     }
 
@@ -212,6 +221,21 @@ class User extends Model{
             ":PASS_USUARIO" => $password,
             ":ID_USUARIO" => $this->getID_USUARIO()
         ));    
+    }
+
+    //ERROS
+    public static function setError($msg){
+        $_SESSION[User::ERROR] = $msg;
+    }
+
+    public static function getError(){
+        $msg = (isset($_SESSION[User::ERROR]) && $_SESSION[User::ERROR]) ? $_SESSION[User::ERROR] : '';
+        User::clearError();
+        return $msg;
+    }
+
+    public static function clearError(){
+        $_SESSION[User::ERROR] = NULL;
     }
 }
 ?>

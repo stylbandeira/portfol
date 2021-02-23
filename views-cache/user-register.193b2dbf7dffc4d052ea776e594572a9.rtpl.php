@@ -24,16 +24,25 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
-<body class="hold-transition login-page">
+<body class="login-page">
   
 <!-- Content Wrapper. Contains page content -->
-<div class="content login-box">
+<!-- CADASTRO -->
+<div class="content col-md-6">
   <div class="login-logo">
     <a href="/"><b>Portfol</b> - Cadastro</a>
   </div>
+
+
     
     <!-- Main content -->
     <section class="content">
+
+      <?php if( $error != '' && $typeError == 'register' ){ ?>
+    <div class="alert alert-danger">
+      <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?><?php echo htmlspecialchars( $typeError, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+    </div>
+    <?php } ?>
     
       <div class="row">
           <div class="col-md-12">
@@ -76,7 +85,7 @@
               
                 <div class="box-footer">
                   <div class="col-md-6">
-                    <button type="submit" class="btn btn-success">Cadastrar</button>
+                    <button type="submit" name="register" class="btn btn-success">Cadastrar</button>
                   </div>
                   <div class="col-md-6">
                     <button href="/" class="btn btn-google">Voltar</button>
@@ -90,6 +99,64 @@
     
     </section>
     <!-- /.content -->
+    </div>
+
+<!-- LOGIN -->
+    <div class="content col-md-6">
+      <div class="login-logo">
+        <a href="/"><b>Portfol</b> - Login</a>
+      </div>
+
+      <!-- Main content -->
+    <section class="content">
+      <?php if( $error != '' && $typeError == 'login' ){ ?>
+    <div class="alert alert-danger">
+      <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+    </div>
+    <?php } ?>
+    
+      <div class="row">
+          <div class="col-md-12">
+              <div class="box box-success">
+            <div class="box-header with-border">
+              <h3 class="box-title">Login</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form" action="/login" method="post">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="LOGIN_USUARIO">Login</label>
+                  <input type="text" class="form-control" id="LOGIN_USUARIO" name="LOGIN_USUARIO" placeholder="Digite o login">
+                </div>
+                <div class="form-group">
+                  <label for="PASS_USUARIO">Senha</label>
+                  <input type="password" class="form-control" id="PASS_USUARIO" name="PASS_USUARIO" placeholder="Digite a senha">
+                </div>
+               
+              </div>
+              <!-- /.box-body -->
+              <!-- <div class="box-footer md" >
+                <button type="submit" class="btn btn-success">Cadastrar</button>
+                <button style="-webkit-box-align: ;" type="submit" class="btn btn-success">Cadastrar</button>
+              </div> -->
+
+              
+                <div class="box-footer">
+                  <div class="col-md-6">
+                    <button type="submit" name="login" class="btn btn-success">Cadastrar</button>
+                  </div>
+                  <div class="col-md-6">
+                    <button href="/" class="btn btn-google">Voltar</button>
+                  </div>
+                </div>
+              
+            </form>
+          </div>
+          </div>
+      </div>
+    
+    </section>
     </div>
     <!-- /.content-wrapper -->
 </body>

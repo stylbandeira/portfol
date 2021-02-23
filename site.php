@@ -114,16 +114,40 @@ $app->get("/register", function(){
         "header" => false,
         "footer" => false
     ]);
-    $page->setTpl("user-register");
+    // if (isset($_POST["login"])) {
+    //     $typeError = 'login';
+    // } else {
+    //     $typeError = 'register';
+    // }
+    $page->setTpl("user-register", array(
+        'error'=>User::getError(),
+        'typeError'=> 'EE'
+    ));
 });
 
 $app->post("/register", function(){
     $user = new User();
     $_POST["ISADMIN_USUARIO"] = (isset($_POST["ISADMIN_USUARIO"]))?1:0;
-    $user->setData($_POST);
-    $user->save();
-    header("Location: /");
+    try{$user->setData($_POST);
+        $user->save();
+        header("Location: /");
+    }catch(Exception $e){
+        User::setError($e->getMessage());
+        header("Location: /register");
+    }
     exit;
 });
 
+//LOGIN CLIENTE
+
+$app->post("/login", function(){
+    try{
+        User::login($_POST['LOGIN_USUARIO'], $_POST['PASS_USUARIO']);
+        header("Location: /");
+    }catch(Exception $e){
+        User::setError($e->getMessage());
+        header("Location: /register");
+    }
+    exit;
+});
 ?>

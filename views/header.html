@@ -70,10 +70,7 @@
       </ul>
       <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" href="/admin/login">Login</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/register">Cadastro</a>
+            <a class="nav-link" href="/register">Entrar</a>
         </li>
       </ul>
       <!-- <form class="d-flex">
