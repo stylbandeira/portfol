@@ -4,6 +4,7 @@ namespace Portfol\Model;
 use Portfol\DB\Sql;
 use Portfol\Model;
 use Portfol\Mailer;
+use Portfol\Model\Cliente;
 
 
 class User extends Model{

@@ -223,8 +223,8 @@ desired effect
                             </ul>
                         </li>
                         <!-- Control Sidebar Toggle Button -->
-                        <li>
-                            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"><i class="fa fa-gears"></i></a>
                         </li>
                     </ul>
                 </div>

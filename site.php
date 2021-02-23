@@ -5,6 +5,7 @@ use Portfol\Model\Table;
 use Portfol\Model\Category;
 use Portfol\Model\Order;
 use Portfol\Model\Cliente;
+use Portfol\Model\User;
 
 require_once("functions.php");
 
@@ -105,6 +106,23 @@ $app->post("/order/:ID_PEDIDO/:ID_ITEM/add", function($idPedido, $idItem){
 
     $order->addItem($item, $qtd);
     header("Location: /order/".$idPedido);
+    exit;
+});
+
+$app->get("/register", function(){
+    $page = new Page([
+        "header" => false,
+        "footer" => false
+    ]);
+    $page->setTpl("user-register");
+});
+
+$app->post("/register", function(){
+    $user = new User();
+    $_POST["ISADMIN_USUARIO"] = (isset($_POST["ISADMIN_USUARIO"]))?1:0;
+    $user->setData($_POST);
+    $user->save();
+    header("Location: /");
     exit;
 });
 
