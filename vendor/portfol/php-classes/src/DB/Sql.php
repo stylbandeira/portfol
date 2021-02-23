@@ -4,15 +4,15 @@ namespace Portfol\DB;
 
 class Sql {
 
-	const HOSTNAME = "216.172.172.213";
-	const USERNAME = "stylba03_user";
-	const PASSWORD = "aZA8dhX)uDrl";
-	const DBNAME = "stylba03_db";
+	// const HOSTNAME = "216.172.172.213";
+	// const USERNAME = "stylba03_user";
+	// const PASSWORD = "aZA8dhX)uDrl";
+	// const DBNAME = "stylba03_db";
 
-	// const HOSTNAME = "localhost";
-	// const USERNAME = "root";
-	// const PASSWORD = "";
-	// const DBNAME = "db_restaurante";
+	const HOSTNAME = "localhost";
+	const USERNAME = "root";
+	const PASSWORD = "";
+	const DBNAME = "db_restaurante";
 
 	private $conn;
 

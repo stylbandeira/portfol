@@ -69,6 +69,7 @@ class User extends Model{
             header("Location: /admin/login");
             exit;
         }
+        
     }
 
     public static function logout(){

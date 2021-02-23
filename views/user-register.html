@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Registro</title>
+  <title>Portfol | Cadastro de Usuário</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -68,9 +68,21 @@
                
               </div>
               <!-- /.box-body -->
-              <div class="box-footer">
+              <!-- <div class="box-footer md" >
                 <button type="submit" class="btn btn-success">Cadastrar</button>
-              </div>
+                <button style="-webkit-box-align: ;" type="submit" class="btn btn-success">Cadastrar</button>
+              </div> -->
+
+              
+                <div class="box-footer">
+                  <div class="col-md-6">
+                    <button type="submit" class="btn btn-success">Cadastrar</button>
+                  </div>
+                  <div class="col-md-6">
+                    <button href="/" class="btn btn-google">Voltar</button>
+                  </div>
+                </div>
+              
             </form>
           </div>
           </div>
