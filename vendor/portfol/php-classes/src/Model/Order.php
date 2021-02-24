@@ -4,6 +4,7 @@ namespace Portfol\Model;
 use Portfol\DB\Sql;
 use Portfol\Model;
 use Portfol\Model\User;
+use Portfol\Model\Cliente;
 
 
 class Order extends Model{
@@ -12,10 +13,21 @@ class Order extends Model{
     public static function getFromSession(){
         $order = new Order();
         
-        if (isset($_SESSION[Order::SESSION]) && 
-            ((int)$_SESSION[Order::SESSION]['ID_PEDIDO']) > 0){
-                $order->get((int)$_SESSION[Order::SESSION]['ID_PEDIDO']);
-            } 
+        if (
+        isset($_SESSION[Order::SESSION]) && 
+        ((int)$_SESSION[Order::SESSION]['ID_PEDIDO']) > 0
+        )
+        {
+            $order->get((int)$_SESSION[Order::SESSION]['ID_PEDIDO']);
+        }
+        else if (
+            isset($_SESSION[User::SESSION]) &&
+            ((int)$_SESSION[User::SESSION]['ID_USUARIO'] > 0)
+        ) {
+            $idUsuario = (int)$_SESSION[User::SESSION]['ID_USUARIO'];
+            $cliente = Cliente::getUserCliente($idUsuario);
+            $order->getOpenClientOrder($cliente->getID_CLIENTE());
+        } 
         else{
             
             $order->getFromSessionID();
@@ -116,6 +128,26 @@ class Order extends Model{
         if (count($results) > 0) {
             $this->setData($results[0]);
         }
+    }
+
+    public function getOpenClientOrder($idCliente){
+        $sql = new Sql();
+        $results = $sql->select("SELECT * FROM pedido 
+            WHERE ID_CLIENTE = :ID_CLIENTE AND
+            STATUS_PEDIDO = 'ABERTO'", array(
+            ':ID_CLIENTE' => (int)$idCliente['ID_CLIENTE']
+        ));
+        $this->setData($results[0]);
+    }
+
+    public function getOpenUserOrder($idUsuario){
+        $sql = new Sql();
+        $results = $sql->select("SELECT ID_CLIENTE FROM cliente 
+            WHERE ID_USUARIO = :ID_USUARIO", array(
+                ':ID_USUARIO' => $idUsuario
+            ));
+        $this->getOpenClientOrder($results[0]);
+        
     }
 
     public function addItem($item, $qtd){

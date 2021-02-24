@@ -11,6 +11,7 @@ class User extends Model{
     const SESSION = "User";
     const SECRET = "HcodePhp7_Secret";
     const ERROR = "UserError";
+    const ERROR_TYPE = "ErrorType";
     const SECRET_IV = "HcodePhp7_Secret_IV";
     
     public static function getFromSession(){
@@ -41,6 +42,23 @@ class User extends Model{
                     return false;
                 }
             }
+    }
+
+    public static function userHasOrder($idUsuario){
+        $sql = new Sql();
+        $results = $sql->select("SELECT * FROM pedido o WHERE
+                                o.ID_CLIENTE = (
+                                    SELECT c.ID_CLIENTE FROM cliente c
+                                    WHERE c.ID_USUARIO = :ID_USUARIO
+                                )
+                                AND STATUS_PEDIDO = 'ABERTO'", array(
+                                    ":ID_USUARIO" =>$idUsuario
+                                ));
+        if (count($results) > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static function login($login, $password){
@@ -224,18 +242,21 @@ class User extends Model{
     }
 
     //ERROS
-    public static function setError($msg){
+    public static function setError($msg, $tipo){
         $_SESSION[User::ERROR] = $msg;
+        $_SESSION[User::ERROR_TYPE] = $tipo;
     }
 
     public static function getError(){
         $msg = (isset($_SESSION[User::ERROR]) && $_SESSION[User::ERROR]) ? $_SESSION[User::ERROR] : '';
+        $type = (isset($_SESSION[User::ERROR_TYPE]) && $_SESSION[User::ERROR_TYPE]) ? $_SESSION[User::ERROR_TYPE] : '';
         User::clearError();
-        return $msg;
+        return array($msg, $type);
     }
 
     public static function clearError(){
         $_SESSION[User::ERROR] = NULL;
+        $_SESSION[User::ERROR_TYPE] = NULL;
     }
 }
 ?>

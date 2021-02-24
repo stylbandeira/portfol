@@ -40,7 +40,7 @@
 
       <?php if( $error != '' && $typeError == 'register' ){ ?>
     <div class="alert alert-danger">
-      <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?><?php echo htmlspecialchars( $typeError, ENT_COMPAT, 'UTF-8', FALSE ); ?>
+      <?php echo htmlspecialchars( $error, ENT_COMPAT, 'UTF-8', FALSE ); ?>
     </div>
     <?php } ?>
     

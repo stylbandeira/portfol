@@ -14,7 +14,12 @@
               </div>
               <div class="form-group">
                 <label for="NOME_CLIENTE">Seu nome <b class="opcional">(opcional)</b></label>
+                <?php if( checkLogin(false) ){ ?>
+                <input type="text" class="form-control" id="NOME_CLIENTE" name="NOME_CLIENTE" disabled value="<?php echo getUserName(); ?>">
+                <?php }else{ ?>
                 <input type="text" class="form-control" id="NOME_CLIENTE" name="NOME_CLIENTE" placeholder="Digite seu nome">
+                <?php } ?>
+                
               </div>
               
               

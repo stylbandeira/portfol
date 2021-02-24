@@ -16,6 +16,7 @@ $app->get('/', function() {
     $page->setTpl("index", array(
         'itens' => Product::checkList($itens)
     ));
+    var_dump($_SESSION);
 });
 
 $app->get('/album', function() {
@@ -47,11 +48,24 @@ $app->get("/categories/:ID_CATEGORIA", function($ID_CATEGORIA){
 
 $app->get("/order", function(){
     $page = new Page();
-    if (isset($_SESSION['Order']) && ($_SESSION['Order']['STATUS_PEDIDO'] === 'ABERTO')) {
+    
+    if (
+        isset($_SESSION['Order']) && 
+        ($_SESSION['Order']['STATUS_PEDIDO'] === 'ABERTO')) {
         // $order->getFromSession();
         header("Location: /order/".$_SESSION['Order']['ID_PEDIDO']);
         exit;
-    } 
+    } else if(
+        isset($_SESSION['User']) &&
+        User::userHasOrder((int)$_SESSION['User']['ID_USUARIO'])
+        ){
+
+        $order = new Order();
+        $order->getOpenUserOrder((int)$_SESSION['User']['ID_USUARIO']);
+        $order->setToSession();
+        header("Location: /order/".$_SESSION['Order']['ID_PEDIDO']);
+        exit;
+    }
     $freeTables = Table::listEmpty();
     $page->setTpl("order", array(
         'freeTables' => $freeTables
@@ -61,12 +75,18 @@ $app->get("/order", function(){
 $app->post("/order", function(){
     $order = new Order();
     
-    $cliente = new Cliente();
-    $cliente->setData($_POST);
-    $cliente->save();
+    if (checkLogin(false)) {
+        $cliente = Cliente::getUserCliente(getUserId());
+        $_POST['ID_CLIENTE'] = $cliente->getID_CLIENTE();
+        $_POST['TIPO_PEDIDO'] = 'LOCAL';
+    } else {
+        $cliente = new Cliente();
+        $cliente->setData($_POST);
+        $cliente->save();
 
-    $_POST['ID_CLIENTE'] = $cliente->getID_CLIENTE();
-    $_POST['TIPO_PEDIDO'] = 'LOCAL';
+        $_POST['ID_CLIENTE'] = $cliente->getID_CLIENTE();
+        $_POST['TIPO_PEDIDO'] = 'LOCAL';
+    }
     $order->setData($_POST);
     $order->save();
     header("Location: /order/".$order->getID_PEDIDO());
@@ -119,9 +139,10 @@ $app->get("/register", function(){
     // } else {
     //     $typeError = 'register';
     // }
+    $error = User::getError();
     $page->setTpl("user-register", array(
-        'error'=>User::getError(),
-        'typeError'=> 'EE'
+        'error'=>$error[0],
+        'typeError'=> $error[1]
     ));
 });
 
@@ -132,7 +153,7 @@ $app->post("/register", function(){
         $user->save();
         header("Location: /");
     }catch(Exception $e){
-        User::setError($e->getMessage());
+        User::setError($e->getMessage(), 'register');
         header("Location: /register");
     }
     exit;
@@ -145,9 +166,15 @@ $app->post("/login", function(){
         User::login($_POST['LOGIN_USUARIO'], $_POST['PASS_USUARIO']);
         header("Location: /");
     }catch(Exception $e){
-        User::setError($e->getMessage());
+        User::setError($e->getMessage(), 'login');
         header("Location: /register");
     }
+    exit;
+});
+
+$app->get("/logout", function(){
+    User::logout();
+    header("Location: /register");
     exit;
 });
 ?>

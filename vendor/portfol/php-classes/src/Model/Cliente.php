@@ -34,6 +34,36 @@ class Cliente extends Model{
         $this->setData($results[0]);
     }
 
+    public function set($user){
+        $sql = new Sql();
+        $results = $sql->select("CALL st_cliente_save (
+            :ID_CLIENTE, 
+            :NOME_CLIENTE,
+            :ID_USUARIO
+            )", array(
+                ":ID_CLIENTE"    =>  0,
+                ":NOME_CLIENTE"     =>  $user->getNOME_USUARIO(),
+                ":ID_USUARIO" => $user->getID_USUARIO()
+            ));
+        $this->setData($results[0]);
+    }
+
+    public static function getUserCliente($idUser){
+        $sql = new Sql();
+        $results = $sql->select("SELECT * FROM cliente WHERE ID_USUARIO = :ID_USUARIO", array(
+            ":ID_USUARIO" => $idUser
+        ));
+        $cliente = new Cliente();
+        if (count($results) > 0) {
+            $cliente->get((int)$results[0]['ID_CLIENTE']);
+        } else {
+            $user = new User();
+            $user->get((int)$idUser);
+            $cliente->set($user);
+        }
+        return $cliente;
+    }
+
     public function delete(){
         $sql = new Sql();
         $sql->query("DELETE FROM cliente WHERE ID_CLIENTE = :ID_CLIENTE", array(
