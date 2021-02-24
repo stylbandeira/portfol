@@ -16,7 +16,6 @@ $app->get('/', function() {
     $page->setTpl("index", array(
         'itens' => Product::checkList($itens)
     ));
-    var_dump($_SESSION);
 });
 
 $app->get('/album', function() {
