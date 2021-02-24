@@ -51,6 +51,7 @@ $app->get("/order", function(){
     
     if (
         isset($_SESSION['Order']) && 
+        sizeof($_SESSION['Order']) > 0 &&
         ($_SESSION['Order']['STATUS_PEDIDO'] === 'ABERTO')) {
         // $order->getFromSession();
         header("Location: /order/".$_SESSION['Order']['ID_PEDIDO']);

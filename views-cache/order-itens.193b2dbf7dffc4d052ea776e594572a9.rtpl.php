@@ -24,7 +24,7 @@
                       <div class="itensPedido">
                         <div class="IPItem"><?php echo htmlspecialchars( $value1["NOME_ITEM"], ENT_COMPAT, 'UTF-8', FALSE ); ?></div>
                         <div class="IPFoto">
-                          <img class="imgItemPedido" src="/res/site/img/products/<?php echo htmlspecialchars( $value1["ID_ITEM"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" alt="">
+                          <img class="imgItemPedido" src="/res/site/img/products/<?php echo htmlspecialchars( $value1["ID_ITEM"], ENT_COMPAT, 'UTF-8', FALSE ); ?>.jpg" alt="">
                         </div>
                         <div class="card">
                           <input type="number" for="QTD" name="QTD" id="QTD" placeholder="Quantidade">
