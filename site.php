@@ -164,6 +164,19 @@ $app->post("/register", function(){
 $app->post("/login", function(){
     try{
         User::login($_POST['LOGIN_USUARIO'], $_POST['PASS_USUARIO']);
+        if (isset($_SESSION['Order'])){
+            // var_dump($_SESSION);
+            // exit;
+            //Pega o cliente do usuário
+            $cliente = Cliente::getUserCliente((int)$_SESSION['User']['ID_USUARIO'])->getValues();
+            $_SESSION['Order']['ID_CLIENTE'] = $cliente['ID_CLIENTE'];
+
+            // var_dump($_SESSION['Order']);
+            // exit;
+            $order = new Order;
+            $order->setData($_SESSION['Order']);
+            $order->updateOrder();
+        }
         header("Location: /");
     }catch(Exception $e){
         User::setError($e->getMessage(), 'login');

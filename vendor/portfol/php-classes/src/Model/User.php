@@ -5,6 +5,7 @@ use Portfol\DB\Sql;
 use Portfol\Model;
 use Portfol\Mailer;
 use Portfol\Model\Cliente;
+use Portfol\Model\Order;
 
 
 class User extends Model{
@@ -98,6 +99,7 @@ class User extends Model{
 
     public static function logout(){
         $_SESSION[User::SESSION] = NULL;
+        $_SESSION[Order::SESSION] = NULL;
     }
 
     public static function listAll(){

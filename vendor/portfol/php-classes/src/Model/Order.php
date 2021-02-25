@@ -204,6 +204,27 @@ class Order extends Model{
                                 ));
     }
 
+    public function updateOrder(){
+        $sql = new Sql();
+        $results = $sql->select("CALL st_pedidoupdate_save(
+            :ID_PEDIDO, 
+            :ID_CLIENTE,
+            :TIPO_PEDIDO,
+            :VAL_TOTAL,
+            :STATUS_PEDIDO,
+            :ID_MESA,
+            :ID_SESSAO)", array(
+                ":ID_PEDIDO" => $this->getID_PEDIDO(), 
+                ":ID_CLIENTE" => $this->getID_CLIENTE(),
+                ":TIPO_PEDIDO" => $this->getTIPO_PEDIDO(),
+                ":VAL_TOTAL" => $this->getVAL_TOTAL(),
+                ":STATUS_PEDIDO" => $this->getSTATUS_PEDIDO(),
+                ":ID_MESA" => $this->getID_MESA(),
+                ":ID_SESSAO" => $this->getID_SESSAO()
+            ));
+        $this->setData($results[0]);
+    }
+
     public function delete(){
         if ($this->getVAL_TOTAL() > 0) {
             throw new \Exception("Você não pode apagar uma conta que ainda não foi paga!", 1);
