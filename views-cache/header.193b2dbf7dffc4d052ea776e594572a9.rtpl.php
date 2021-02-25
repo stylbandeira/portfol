@@ -7,6 +7,9 @@
     <meta name="author" content="Styl Bandeira">
     <title>Portfólio</title>
 
+    <!-- AdminLTE -->
+    <link rel="stylesheet" href="../res/admin/dist/css/AdminLTE.min.css">
+
      <!-- Google Fonts -->
      <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
      <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>
@@ -22,12 +25,13 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/navbar-fixed/">
-    <link rel="stylesheet" href="/dist/st-portfol.css">
+    
 
     
 
     <!-- Bootstrap core CSS -->
     <link href="/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/dist/st-portfol.css">
 
     
 

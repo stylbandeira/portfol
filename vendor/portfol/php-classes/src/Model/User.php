@@ -121,10 +121,24 @@ class User extends Model{
                             ":TELEFONE_USUARIO" =>  $this->getTELEFONE_USUARIO(),
                             ":NOME_USUARIO"     =>  $this->getNOME_USUARIO()
                         ));
-        if (count($results) === 0) {
+        if (User::usedEmail($this->getEMAIL_USUARIO())){
+            throw new \Exception("Email já cadastrado", 1);
+        }
+        else if (count($results) === 0) {
             throw new \Exception("Preencha os dados corretamente", 1);
         }
         $this->setData($results[0]);
+    }
+
+    public static function usedEmail($email){
+        $sql = new Sql();
+        $results = $sql->select("SELECT * FROM usuario WHERE EMAIL_USUARIO = :EMAIL_USUARIO", array(
+            ":EMAIL_USUARIO" => $email
+        ));
+        if (count($results) > 0) {
+            return true;
+        }
+        return false;
     }
 
     public function get($idUsuario){
@@ -165,7 +179,7 @@ class User extends Model{
         ));
     }
 
-    public static function getForgot($email){
+    public static function getForgot($email, $inAdmin = true){
         $sql = new Sql();
         $results = $sql->select("SELECT * 
         FROM usuario
@@ -186,10 +200,19 @@ class User extends Model{
             if (count($results2) === 0) {
                 throw new \Exception("Não foi possível recuperar a senha");
             }else {
+
+                
                 $dataRecovery = $results2[0];
                 $code = openssl_encrypt($dataRecovery['ID_RECOVERY'], 'AES-128-CBC', pack("a16", User::SECRET), 0, pack("a16", User::SECRET_IV));                
                 $code = base64_encode($code);
-                $link = "http://www.portfol.com.br/admin/forgot/reset?code=$code";
+                
+
+                if ($inAdmin === true) {
+                    $link = "http://www.portfol.com.br/admin/forgot/reset?code=$code";
+                } else {
+                    $link = "http://www.portfol.com.br/forgot/reset?code=$code";
+                }
+
                 $mailer = new Mailer($data["EMAIL_USUARIO"], $data["NOME_USUARIO"], "Redefinição de Senha do Portfol", "forgot", array(
                     "name"=>$data["NOME_USUARIO"],
                     "link"=>$link

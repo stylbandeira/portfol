@@ -473,6 +473,14 @@ z-index: 999;}
     color: black;
 }
 
+a{
+    color: #e67e22;
+}
+
+a:hover{
+    color: black;
+}
+
 .ST_divAway{
     padding-top: 20px;
 }

@@ -1,7 +1,7 @@
 html, body{
     height: 100%;
     margin: 0%;
-    margin-top: 100px;
+    margin-top: 25px;
 }
 
 main{
@@ -39,4 +39,12 @@ main{
 
 #contact-area{
     margin: 10px;
+}
+
+a{
+    color: #e67e22;
+}
+
+a:hover{
+    color: black;
 }
